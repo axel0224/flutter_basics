@@ -1,0 +1,21 @@
+require_relative '../flutter_forwarded_runtime.rb'
+
+# Uncomment the next line to define a global platform for your project
+platform :ios, '12.0'
+
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+post_install do |installer|
+  installer.pods_project.target.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+end
+
