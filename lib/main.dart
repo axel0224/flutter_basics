@@ -1,34 +1,45 @@
 import 'package:flutter/material.dart';
+import 'quote.dart';
+import 'quote_card.dart';
 
 void main() => runApp (MaterialApp(
-  home: Home(),
+  home: QuoteList(),
 ));
 
-class Home extends StatelessWidget {
+class QuoteList extends StatefulWidget {
+  @override
+  _QuoteListState createState() => _QuoteListState();
+}
+
+class _QuoteListState extends State<QuoteList> {
+
+  List<Quote> quotes = [
+    Quote(author: 'oscar wilde', text: 'quote1'),
+    Quote(author: 'labubu', text: 'labu labu labu labu'),
+    Quote(author: 'george r martin', text: 'game of thrones')
+  ];
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('SkinCare App'), 
-        centerTitle: true, 
-        backgroundColor: Colors.green,
+        title: Text('Awsome Quotes'),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
       ),
-      body: Center(
-        child: Text(
-          "Welcome to my SkinCare App",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 2.0,
-          )
-        ),
+      body: Column(
+        children: quotes.map((quote) => QuoteCard(
+          quote: quote,
+          delete: () {
+            setState(() {
+              quotes.remove(quote);  
+            });
+          }
+          )).toList(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text("click"),
-        backgroundColor: Colors.amber,
-      )
     );
-
   }
 }
+
